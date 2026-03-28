@@ -9,7 +9,7 @@ G="\e[32m"
 Y="\e[33m"
 N="\e[0m"
 echo "Please enter DB password:"
-read  mysql_root_password
+read -s mysql_root_password
 
 VALIDATE(){
     if [ $1 -ne 0 ]
@@ -42,7 +42,7 @@ VALIDATE $? "Starting MySQL Server"
 # VALIDATE $? "Setting up root password"
 
 #Below code will be useful for idempotent nature
-mysql -h 172.31.1.196 ${mysql_root_password} -e 'show databases;' &>> $LOGFILE
+mysql -h 32.192.40.3 -uroot -p${mysql_root_password} -e 'show databases;' &>>$LOGFILE
 if [ $? -ne 0 ]
 then
     mysql_secure_installation --set-root-pass ${mysql_root_password} &>> $LOGFILE
